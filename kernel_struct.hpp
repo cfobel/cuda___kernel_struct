@@ -5,8 +5,10 @@
 #include "kernel_struct.hpp"
 using namespace std;
 
-struct point {
+class point {
+public:
     float a, b;
+    void some_method() {}
 };
 
 vector<int> test_int(int num_points);

@@ -3,6 +3,14 @@
 #include "kernel_struct.hpp"
 using namespace std;
 
+
+class CUDApoint {
+public:
+    float a, b;
+    __device__ void some_other_method() {}
+};
+
+
 template <class T>
 __global__ void testKernel(T *data) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -12,8 +20,9 @@ __global__ void testKernel(T *data) {
 template <>
 __global__ void testKernel<point>(point *p) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
-    p[i].a = 1.1 * i;
-    p[i].b = 2.2 * i;
+    CUDApoint *test = (CUDApoint *)p;
+    test[i].a = 1.1 * i;
+    test[i].b = 2.2 * i;
 }
 
 template <class T>
